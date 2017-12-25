@@ -1,0 +1,18 @@
+#######################################
+# Syntax Coloring Map
+#######################################
+
+#######################################
+# Datatypes (KEYWORD1)
+#######################################
+
+PostParser	KEYWORD1
+
+#######################################
+# Methods and Functions (KEYWORD2)
+#######################################
+addHeaderCharacter	KEYWORD2
+getHeader	KEYWORD2
+grabPayload	KEYWORD2
+getPayload	KEYWORD2
+getField	KEYWORD2
