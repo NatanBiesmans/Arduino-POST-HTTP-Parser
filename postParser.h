@@ -3,7 +3,7 @@
 
 
 #include "Arduino.h"
-#include "Ethernet2.h"
+#include "Ethernet.h"
 
 class PostParser {
   public:
