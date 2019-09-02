@@ -16,13 +16,17 @@ String popLine(const String& data) {
 }
 
 String getHeaderField(const String& data, String key) {
-  String bufferData = data;
+  const String&  bufferData = data;
   int keyIndex = bufferData.indexOf(key);
+  Serial.println(bufferData);
+  Serial.println(key);
   if (keyIndex == -1) {
     return "";
   }
   int startIndex = bufferData.indexOf(": ", keyIndex);
   int stopIndex = bufferData.indexOf("\r\n", keyIndex);
+  //	Serial.print("data: ");
+	//Serial.println(bufferData.substring(startIndex + 2, stopIndex));
   return bufferData.substring(startIndex + 2, stopIndex);
 }
 
@@ -84,7 +88,6 @@ void PostParser::grabPayload() {
   //if (getContentType(_header) == "application/x-www-form-urlencoded") {
     _payload = readPayLoad(_client, getPayLoadSize(_header));
     
-  Serial.println(_payload);
   //}
 }
 
