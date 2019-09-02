@@ -18,8 +18,6 @@ String popLine(const String& data) {
 String getHeaderField(const String& data, String key) {
   const String&  bufferData = data;
   int keyIndex = bufferData.indexOf(key);
-  Serial.println(bufferData);
-  Serial.println(key);
   if (keyIndex == -1) {
     return "";
   }
