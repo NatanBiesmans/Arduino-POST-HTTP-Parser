@@ -25,7 +25,7 @@ EthernetServer server(80);
 int numberOfChannels = 4;
 
 int rgbPins[4][3] = {
-  {5, 6, 3},
+  {5, 6, 4},
   {0, 0, 0},
   {0, 0, 0},
   {0, 0, 0}
@@ -48,7 +48,7 @@ int delay_time = 20;
 
 void setup() {
   // Open serial communications and wait for port to open:
-  Serial.begin(1000000);
+  Serial.begin(115200);
   while (!Serial) {
     ; // wait for serial port to connect. Needed for Leonardo only
   }
@@ -73,7 +73,7 @@ void loop() {
       if (client.available()) {
         char c = client.read();
         postParser.addHeaderCharacter(c); // compose the header
-
+        Serial.print(c);
         if (c == '\n' && currentLineIsBlank) { // end of header
           // handle data
           postParser.grabPayload(); // Use the header to get the payload in memory

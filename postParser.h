@@ -12,17 +12,17 @@ class PostParser {
     String getHeader();
     void grabPayload();
     String getPayload();
-    String getField(String key);
+    String getField(const String& key);
   private:
     String _header;
     String _payload;
     EthernetClient _client;
 
-    String getHeaderField(String data, String key);
-    String getLine(String data);
-    String popLine(String data);
-    String getLineFromIndex(String data, int index);
-    String extractPayload(String payload, String key);
+    String getHeaderField(const String& data, String key);
+    String getLine(const String& data);
+    String popLine(const String& data);
+    String getLineFromIndex(const String& data, int index);
+    String extractPayload(const String& payload, const String& key);
 };
 
 #endif

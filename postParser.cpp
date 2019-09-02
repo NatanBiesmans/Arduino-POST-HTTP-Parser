@@ -4,30 +4,29 @@
 //private
 
 
-String getLine(String data) {
+String getLine(const String& data) {
   int endOfLineIndex = data.indexOf("\r\n");
   return data.substring(0, endOfLineIndex );
 }
 
-String popLine(String data) {
+String popLine(const String& data) {
   int endOfLineIndex = data.indexOf("\r\n");
   //Serial.println(data.substring(endOfLineIndex + 2, data.length() - 1));
   return data.substring(endOfLineIndex + 2, data.length());
 }
 
-String getHeaderField(String data, String key) {
-
-  int keyIndex = data.indexOf(key);
+String getHeaderField(const String& data, String key) {
+  String bufferData = data;
+  int keyIndex = bufferData.indexOf(key);
   if (keyIndex == -1) {
     return "";
   }
-  int startIndex = data.indexOf(": ", keyIndex);
-  int stopIndex = data.indexOf("\r\n", keyIndex);
-
-  return data.substring(startIndex + 2, stopIndex);
+  int startIndex = bufferData.indexOf(": ", keyIndex);
+  int stopIndex = bufferData.indexOf("\r\n", keyIndex);
+  return bufferData.substring(startIndex + 2, stopIndex);
 }
 
-String getLineFromIndex(String data, int index) {
+String getLineFromIndex(const String& data, int index) {
   String bufferData = data;
   for (int i = 0; i < index; i++) {
     bufferData = popLine(bufferData);
@@ -35,7 +34,7 @@ String getLineFromIndex(String data, int index) {
   return getLine(bufferData);
 }
 
-String getContentType(String header) {
+String getContentType(const String& header) {
   String contentType = getHeaderField(header, "content-type");
   if (contentType == "") {
     contentType = getHeaderField(header, "Content-Type");
@@ -53,7 +52,7 @@ String readPayLoad(EthernetClient client, int payLoadSize) {
 }
 
 
-int getPayLoadSize(String header) {
+int getPayLoadSize(const String& header) {
   String contentLength = getHeaderField(header, "content-length");
   if (contentLength == "") {
     contentLength = getHeaderField(header, "Content-Length");
@@ -83,7 +82,9 @@ String PostParser::getHeader() {
 
 void PostParser::grabPayload() {
   //if (getContentType(_header) == "application/x-www-form-urlencoded") {
-  _payload = readPayLoad(_client, getPayLoadSize(_header));
+    _payload = readPayLoad(_client, getPayLoadSize(_header));
+    
+  Serial.println(_payload);
   //}
 }
 
@@ -91,7 +92,7 @@ String PostParser::getPayload() {
   return _payload;
 }
 
-String PostParser::getField(String key) {
+String PostParser::getField(const String& key) {
 
   int keyIndex = _payload.indexOf(key);
   int startIndex = _payload.indexOf("=", keyIndex);

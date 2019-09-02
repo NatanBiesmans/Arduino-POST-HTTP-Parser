@@ -1,4 +1,4 @@
-#include <Ethernet2.h>
+#include <Ethernet.h>
 #include <SPI.h>
 #include "postParser.h"
 
@@ -16,12 +16,12 @@ EthernetServer server(80);
 
 int numberOfChannels = 4;
 
-int LedPin = 13;
+int LedPin = 3;
 boolean LedState = false;
 
 void setup() {
   // Open serial communications and wait for port to open:
-  Serial.begin(1000000);
+  Serial.begin(115200);
   while (!Serial) {
     ; // wait for serial port to connect. Needed for Leonardo only
   }
@@ -45,8 +45,10 @@ void loop() {
     while (client.connected()) {
       if (client.available()) {
         char c = client.read();
+        Serial.print(c);
         postParser.addHeaderCharacter(c); // compose the header
 
+        //if(!client.connected()){
         if (c == '\n' && currentLineIsBlank) { // end of header
           postParser.grabPayload();
 
@@ -63,9 +65,9 @@ void loop() {
           client.println();
           client.println("Done");
           
-          Serial.println(postParser.getHeader()); // print the header for debugging
+          //Serial.println(postParser.getHeader()); // print the header for debugging
           delay(10); //used to make sure the 2 serial prints don't overlap each other
-          Serial.println(postParser.getPayload()); // print the payload for debugging
+          //Serial.println(postParser.getPayload()); // print the payload for debugging
           break;
         }
         
@@ -112,4 +114,3 @@ $(document).ready(function(){
 </body>
 </html>
 */
-
